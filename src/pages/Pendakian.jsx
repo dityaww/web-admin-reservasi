@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { transactionPending, transactionSuccess } from '../api/api'
+import { approveCheckIn, transactionPending, transactionSuccess, approveCheckOut } from '../api/api'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import moment from 'moment'
@@ -28,6 +28,34 @@ function Pendakian() {
   const handleNavigation = (id) => {
     navigation(`${id}`)
   }
+
+  const postCheckIn = async (id, data, tokens) => {
+    try {
+        const res = await approveCheckIn(id, data, tokens)
+        console.log(res);
+        alert('sukses cek-in')
+    } catch (error) {
+        alert('gagal cek-in')        
+    }
+  }
+  
+  const postCheckOut = async (id, data, tokens) => {
+    try {
+        const res = await approveCheckOut(id, data, tokens)
+        console.log(res);
+        alert('sukses cek-out')
+    } catch (error) {
+        alert('gagal cek-out') 
+        console.log(error);       
+    }
+  }
+
+  useEffect(() => {
+    if(data.length !== null){
+        console.log('data ada');
+    }
+  }, [data])
+  
 
   return (
     <div className="flex flex-row h-screen w-full">
@@ -83,7 +111,10 @@ function Pendakian() {
                                   Check-Out
                               </th>
                               <th scope="col" className="px-6 py-3">
-                                  Aksi
+                                  Detail
+                              </th>
+                              <th scope="col" className="px-6 py-3">
+                                  Opsi
                               </th>
                           </tr>
                       </thead>
@@ -112,14 +143,26 @@ function Pendakian() {
                                         }).format(items.total)
                                       }
                                   </td>
-                                  <td className="px-6 py-4">
+                                  <td className="px-6 py-4 w-40">
                                       {items.check_in === '-' ? items.check_in : moment(items.check_in).format('LLL')}
                                   </td>
-                                  <td className="px-6 py-4">
+                                  <td className="px-6 py-4 w-40">
                                       {items.check_out === '-' ? items.check_out : moment(items.check_out).format('LLL')}
                                   </td>
-                                  <td className="px-6 py-4 flex gap-3 w-40">
-                                      <buton onClick={() => handleNavigation(items._id)} className="font-medium text-blue-600 hover:underline hover:cursor-pointer">show detail</buton>
+                                  <td className="px-6 py-4">
+                                      <buton onClick={() => handleNavigation(items._id)} className="font-medium text-blue-600 hover:underline hover:cursor-pointer">show</buton>
+                                  </td>
+                                  <td className='px-6 py-4 flex flex-col gap-2 w-36'>
+                                    {/* <input type="text" disabled={true} value={'halo'} /> */}
+                                    <input disabled={items.check_in !== '-' && true} value={'check-in'} onClick={() => postCheckIn(items._id, '', token)} className={`font-medium ${items.check_in !== '-' ? 'bg-gray-300 text-gray-500' : 'bg-blue-600 hover:bg-blue-700 text-white hover:cursor-pointer'} text-center py-1 w-24 rounded-md mr-2`} />
+                                    <input disabled={items.check_out !== '-' && true} value={'check-out'} onClick={() => {
+                                        if(items.check_in === '-'){
+                                            alert('cek-in dulu baru cek-out')
+                                        } else{
+                                            postCheckOut(items._id, '', token)
+                                        }
+                                    
+                                    }} className={`font-medium ${items.check_out !== '-' ? 'bg-gray-300 text-gray-500' : 'bg-red-600 hover:bg-red-700 text-white hover:cursor-pointer'} text-center py-1 w-24 rounded-md`} />
                                   </td>
                               </tr>
                             ))
