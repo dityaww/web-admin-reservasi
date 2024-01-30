@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const base_url = 'https://62.72.24.89:5000'
+const base_url = 'http://62.72.24.89:5000'
 
 export const authLogin = async (datas) => {
     const response = await axios.post(`${base_url}/auth/login`, datas)
@@ -52,5 +52,25 @@ export const detailPendakian = async (id, tokens) => {
             "Authorization": tokens
         }
     })
+    return response.data
+}
+
+export const approveCheckIn = async (id, data, tokens) => {
+    const response = await axios.put(`${base_url}/admin/check-in/${id}`, data, {
+        headers: {
+            "Authorization": tokens
+        }
+    })
+    
+    return response.data
+}
+
+export const approveCheckOut = async (id, data, tokens) => {
+    const response = await axios.put(`${base_url}/admin/check-out/${id}`, data, {
+        headers: {
+            "Authorization": tokens
+        }
+    })
+
     return response.data
 }
