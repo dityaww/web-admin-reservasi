@@ -83,6 +83,11 @@ function Pendakian() {
                     </li>
                     </ul>
                 </div>
+
+                <div className="flex flex-row gap-3">
+                    <button onClick={() => getTransactionPending(token)} class="block px-4 py-2 hover:bg-gray-100 w-full text-left">Pending</button>
+                    <button onClick={() => getTransactionSuccess(token)} class="block px-4 py-2 hover:bg-gray-100 w-full text-left">Sukses</button>
+                </div>
             </div>
 
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
