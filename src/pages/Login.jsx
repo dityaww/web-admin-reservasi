@@ -23,7 +23,7 @@ function Login() {
       const token = localStorage.getItem('token')
 
       if(token){
-        axios.get(`http://62.72.24.89:5000/auth/whoami`, {
+        axios.get(`https://api.gunungungaran.site/auth/whoami`, {
           headers: {
             "Authorization": token
           }

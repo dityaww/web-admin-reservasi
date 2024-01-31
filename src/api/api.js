@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const base_url = 'http://62.72.24.89:5000'
+const base_url = 'https://api.gunungungaran.site'
 
 export const authLogin = async (datas) => {
     const response = await axios.post(`${base_url}/auth/login`, datas)
