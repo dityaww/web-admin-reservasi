@@ -9,6 +9,7 @@ import NoRoutes from './pages/NoRoutes';
 import Pendakian from './pages/Pendakian';
 import Profile from './pages/Profile';
 import Regulation from './pages/Regulation';
+import Rekab from './pages/Rekab';
 
 const App = () => {
   
@@ -31,6 +32,12 @@ const App = () => {
             </Route>
             
             <Route path='mount' element={<Gunung />}/>
+
+            <Route path='rekabpendakian'>
+              <Route index element={<Rekab />}/> 
+              <Route path=':id' element={<DetailPendakian />} />
+            </Route>
+            {/* <Route path='rekabpendakian' element={<Rekab />}/> */}
 
             <Route path='*' element={<NoRoutes />}/>
           </Route>
