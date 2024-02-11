@@ -1,13 +1,86 @@
 import React, { useEffect, useState } from 'react'
-import { deleteRegulation, getRegulation } from '../api/api'
+import { addRules, deleteRegulation, getRegulation, editRules } from '../api/api'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import Lottie from 'react-lottie';
 import animationData from '../assets/loading.json'; // Ganti dengan path file JSON Lottie Anda
+import Modal from 'react-modal';
 
 function Regulation() {
   const [ data, setData ] = useState([])
   const token = localStorage.getItem('token')
+  const [rules, setRules] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const [editDatas, setEditDatas] = useState()
+  const [id, setId] = useState()
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  
+  const openEditModal = async (id, data) => {
+    setIsModalEditOpen(true);
+    const res = editRules(id, data, token)
+    res.then((res) => {
+      console.log(res);
+      setEditDatas(res.data)
+    })
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const closeEditModal = () => {
+    setIsModalEditOpen(false);
+  };
+
+  const handleInputChange = (event) => {
+    setRules(event.target.value);
+    console.log("data in textarea:", rules);
+  };
+
+  const handleInputEditChange = (event) => {
+    setEditDatas(event.target.value);
+  };
+
+  const handleAddData = async (token) => {
+    // Lakukan aksi penambahan data sesuai kebutuhan
+    const data = {
+      rule: rules
+    }
+    
+    const res = await addRules(data, token)
+    console.log(res.data);
+
+    // Setelah menambahkan data, tutup modal
+    closeModal();
+  };
+
+  const handleEditData = async (id, token) => {
+    // Lakukan aksi penambahan data sesuai kebutuhan
+    const data = {
+      rule: editDatas
+    }
+    
+    const res = await editRules(id, data, token)
+    console.log(res.data);
+
+    // Setelah menambahkan data, tutup modal
+    closeEditModal();
+  };
+
+  const modalStyle = {
+    content: {
+      width: '50%', // Atur lebar modal
+      height: '50%', // Atur tinggi modal
+      top: '50%', // Posisi vertikal modal di tengah
+      left: '50%', // Posisi horizontal modal di tengah
+      transform: 'translate(-50%, -50%)', // Pusatkan modal
+      borderRadius: 20
+    },
+  };
 
   useEffect(() => {
     const fetch = async () => {
@@ -46,6 +119,52 @@ function Regulation() {
 
           <div className="mt-10">
               <h1 className='font-bold text-2xl text-neutral-600 font-nw'>Regulation</h1>
+              
+              <button className='py-2 px-6 bg-neutral-200 hover:bg-neutral-300 font-semibold text-neutral-500 mt-5 rounded-md' onClick={openModal}>Tambah Data</button>
+
+              <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                contentLabel="Modal Tambah Data"
+                style={modalStyle}
+                ariaHideApp={false}
+              >
+                <div className="m-3">
+                  <h2 className='text-2xl font-bold text-neutral-600'>Tambah Data</h2>
+                  <hr className='my-4' />
+                  <div className="flex flex-col gap-3">
+                    <label className='font-semibold text-lg text-neutral-600'>Regulasi</label>
+                    <textarea className='border border-neutral-200 text-neutral-600 outline-blue-400 rounded-md px-4 py-2' name="" id="" cols="4" rows="4" onChange={handleInputChange}/>
+                    {/* <input className='border border-neutral-400 px-4 py-2' type="text" value={newData} onChange={handleInputChange} /> */}
+                  </div>
+                  <div className="flex flex-row gap-2 mt-5">
+                    <button className='bg-neutral-200 text-neutral-500 px-6 py-2 rounded-md hover:bg-neutral-300' onClick={closeModal}>Batal</button>
+                    <button className='bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600' onClick={() => handleAddData(token)}>Tambah</button>
+                  </div>
+                </div>
+              </Modal>
+              
+              <Modal
+                isOpen={isModalEditOpen}
+                onRequestClose={closeEditModal}
+                contentLabel="Modal Edit Data"
+                style={modalStyle}
+                ariaHideApp={false}
+              >
+                <div className="m-3">
+                  <h2 className='text-2xl font-bold text-neutral-600'>Edit Data</h2>
+                  <hr className='my-4' />
+                  <div className="flex flex-col gap-3">
+                    <label className='font-semibold text-lg text-neutral-600'>Regulasi</label>
+                    <textarea className='border border-neutral-200 text-neutral-600 outline-blue-400 rounded-md px-4 py-2' name="" id="" cols="4" rows="4" value={editDatas?.rule} onChange={handleInputEditChange}/>
+                    {/* <input className='border border-neutral-400 px-4 py-2' type="text" value={newData} onChange={handleInputChange} /> */}
+                  </div>
+                  <div className="flex flex-row gap-2 mt-5">
+                    <button className='bg-neutral-200 text-neutral-500 px-6 py-2 rounded-md hover:bg-neutral-300' onClick={closeEditModal}>Batal</button>
+                    <button className='bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600' onClick={() => handleEditData(id, token)}>Simpan</button>
+                  </div>
+                </div>
+              </Modal>
       
               {/* <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
                 Toggle modal
@@ -112,7 +231,10 @@ function Regulation() {
                                       {items.rule}
                                   </td>
                                   <td className="px-6 py-4 flex gap-3">
-                                      <buton className="font-medium text-blue-600 hover:underline hover:cursor-pointer ">Edit</buton>
+                                      <buton onClick={() => {
+                                        openEditModal(items.id, token)
+                                        setId(items.id)
+                                        }} className="font-medium text-blue-600 hover:underline hover:cursor-pointer ">Edit</buton>
                                       <buton onClick={() => deleteRules(items.id, token)} className="font-medium text-red-600 hover:underline hover:cursor-pointer">Delete</buton>
                                   </td>
                               </tr>
