@@ -74,3 +74,60 @@ export const approveCheckOut = async (id, data, tokens) => {
 
     return response.data
 }
+
+export const getPendakianToday = async (status, tokens) => {
+    const response = await axios.get(`${base_url}/admin/reservasitoday?status=${status}`, {
+        headers: {
+            "Authorization": tokens
+        }
+    })
+
+    return response.data
+}
+
+export const getPendakianStartFromToday = async (status, tokens) => {
+    const response = await axios.get(`${base_url}/admin/reservasinext?status=${status}`, {
+        headers: {
+            "Authorization": tokens
+        }
+    })
+
+    return response.data
+}
+
+export const getAllDataPendakian = async (status, tokens) => {
+    const response = await axios.get(`${base_url}/admin/alldata?status=${status}`, {
+        headers: {
+            "Authorization": tokens
+        }
+    })
+
+    return response.data
+}
+
+export const RekapPerBulan = async (bulan, tahun, tokens) => {
+    const response = await axios.get(`${base_url}/admin/monthlyreservations?bulan=${bulan}&tahun=${tahun}`, {
+        headers: {
+            "Authorization": tokens
+        }
+    })
+    return response.data
+}
+
+export const addRules = async (data, tokens) => {
+    const response = await axios.post(`${base_url}/regulation/createdata`, data, {
+        headers: {
+            "Authorization": tokens
+        }
+    })
+    return response.data
+}
+
+export const editRules = async (id, data, tokens) => {
+    const response = await axios.put(`${base_url}/regulation/updatedata/${id}`, data, {
+        headers: {
+            "Authorization": tokens
+        }
+    })
+    return response.data
+}
