@@ -43,7 +43,6 @@ function Login() {
       setIsError(true)
       console.log(error);
     }
-
   }
 
   return (
@@ -84,7 +83,7 @@ function Login() {
                     </button>
                   </div>
               )}
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Username</label>
                 <input 
                   id='email'
                   type="email" 
