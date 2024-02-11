@@ -5,10 +5,11 @@ import logo from "../assets/ungaran.png"
 export default function Sidebar() {
   const menu = [
     { name: "Dashboard", linked: '/dashboard' },
-    { name: "Profile", linked: '/dashboard/profile'},
+    // { name: "Profile", linked: '/dashboard/profile'},
     { name: "Informasi Gunung", linked: '/dashboard/mount'},
     { name: "Regulation", linked: '/dashboard/regulation'},
     { name: "Pendakian", linked: '/dashboard/pendakian'},
+    { name: "Rekap Pendakian", linked: '/dashboard/rekabpendakian'},
     { name: "Logout", linked: '/' },
   ];
 
