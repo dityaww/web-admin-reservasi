@@ -24,11 +24,6 @@ function DetailPendakian() {
         },
       };
 
-    // var set = moment
-
-    // console.log(set);
-
-
     useEffect(() => {
         const fetch = async (detailId, admToken) => {
             const response = await detailPendakian(detailId, admToken)
@@ -55,10 +50,10 @@ function DetailPendakian() {
             <div className="mt-10">
                 <div className="flex flex-row justify-between">
                     <h1 className='font-regular text-2xl text-neutral-600 antialiased'>Detail</h1>
-                    <div className="flex flex-row">
+                    {/* <div className="flex flex-row">
                         <Link to='/dashboard/pendakian' className='text-gray-500 mr-1'>Reservasi</Link>
                         <p className='text-blue-500'>/ Detail Reservasi</p>
-                    </div>
+                    </div> */}
                 </div>
 
                 {dataDetail === null ? (
@@ -67,8 +62,8 @@ function DetailPendakian() {
                     </div>
                 ) : (
                     <div className="border border-gray-300 px-14 py-10 my-8 rounded-lg flex flex-col gap-4 relative">
-                        <div className={`absolute top-0 right-0 ${dataDetail?.status_pembayaran === 'success' ? 'bg-emerald-500' : 'bg-gray-300'} px-12 py-2 rounded-full m-8`}>
-                            <p className={`text-lg font-semibold ${dataDetail?.status_pembayaran === 'success' ? 'text-white' : 'text-gray-500'}`}>{dataDetail?.status_pembayaran}</p>
+                        <div className={`absolute top-0 right-0 ${dataDetail?.status_pembayaran === 'completed' ? 'bg-emerald-500' : dataDetail?.status_pembayaran === 'success' ? 'bg-blue-500' : 'bg-gray-300'} px-12 py-2 rounded-full m-8`}>
+                            <p className={`text-lg font-semibold ${dataDetail?.status_pembayaran === 'completed' || dataDetail?.status_pembayaran === 'success' ? 'text-white' : 'text-gray-500'}`}>{dataDetail?.status_pembayaran}</p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <p className='text-4xl font-bold text-gray-800'>Gunung Ungaran</p>
@@ -80,15 +75,15 @@ function DetailPendakian() {
                         </div>
                         <div className="flex flex-col gap-2 mt-3">
                             <p className='text-xl font-semibold text-gray-800'>Check In</p>
-                            <p>{moment(dataDetail?.check_in).locale('id').format("LLL")}</p>
+                            <p>{dataDetail?.check_in !== "-" ? moment(dataDetail?.check_in).format("LLL") : '-'}</p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <p className='text-xl font-semibold text-gray-800'>Check Out</p>
-                            <p>{moment(dataDetail?.check_out).locale('id').format("LLL")}</p>
+                            <p>{dataDetail?.check_out !== "-"? moment(dataDetail?.check_out).format("LLL") : '-'}</p>
                         </div>
                         <div className="flex flex-col gap-2">
                             <p className='text-xl font-semibold text-gray-800'>Tanggal Pendakian</p>
-                            <p>{dataDetail?.tanggal_pendakian}</p>
+                            <p>{moment(dataDetail?.tanggal_pendakian).format("DD-MM-YYYY")}</p>
                         </div>
 
                         <p className='text-xl font-semibold text-gray-800'>Anggota Pendaki</p>
