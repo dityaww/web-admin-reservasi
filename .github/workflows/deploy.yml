@@ -19,10 +19,10 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t web-admin-reservasi:latest  .
+        run: docker build -t web-admin-reservasi:latest .
 
       - name: Tag Docker image
-        run: docker tag web-admin-reservasi:latest  widhofaisal/web-admin-reservasi:latest 
+        run: docker tag web-admin-reservasi:latest widhofaisal/web-admin-reservasi:latest
 
       - name: Push Docker image
         run: docker push widhofaisal/web-admin-reservasi:latest
@@ -30,12 +30,12 @@ jobs:
       - name: Deploy Using ssh
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.TOTALINDO_SSH_HOST }}
-          username: ${{ secrets.TOTALINDO_SSH_USERNAME }}
-          password: ${{ secrets.TOTALINDO_SSH_PASSWORD }}
+          host: ${{ secrets.BURNIAT_SSH_HOST }}
+          username: ${{ secrets.BURNIAT_SSH_USERNAME }}
+          password: ${{ secrets.BURNIAT_SSH_PASSWORD }}
           port: 22
           script: |
-            echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker pull widhofaisal/web-admin-reservasi:latest
-            echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker stop container_dashboard
-            echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker rm -v container_dashboard
-            echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker run -d -it -p 5173:5173 --name container_dashboard widhofaisal/web-admin-reservasi:latest
+            echo ${{ secrets.BURNIAT_SSH_PASSWORD }} | sudo -S docker pull widhofaisal/web-admin-reservasi:latest
+            echo ${{ secrets.BURNIAT_SSH_PASSWORD }} | sudo -S docker stop container_hoi_dashboard
+            echo ${{ secrets.BURNIAT_SSH_PASSWORD }} | sudo -S docker rm -v container_hoi_dashboard
+            echo ${{ secrets.BURNIAT_SSH_PASSWORD }} | sudo -S docker run -d -it -p 3000:3000 --name container_hoi_dashboard widhofaisal/web-admin-reservasi:latest
