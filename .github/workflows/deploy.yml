@@ -38,4 +38,4 @@ jobs:
             echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker pull widhofaisal/web-admin-reservasi:latest
             echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker stop container_hoi_dashboard
             echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker rm -v container_hoi_dashboard
-            echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker run -d -it -p 3000:3000 --name container_hoi_dashboard widhofaisal/web-admin-reservasi:latest
+            echo ${{ secrets.TOTALINDO_SSH_PASSWORD }} | sudo -S docker run -d -it -p 5173:5173 --name container_hoi_dashboard widhofaisal/web-admin-reservasi:latest
