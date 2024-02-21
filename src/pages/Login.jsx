@@ -51,7 +51,7 @@ function Login() {
         <div className="flex flex-col items-center justify-center gap-10">
           <div className='flex flex-col items-center gap-8'>
             <p className='text-4xl font-bold'>Ungaran<span className='font-light'>Hike</span></p>
-            <p className='text-gray-600 w-56 text-center text-lg'>Lorem ipsum dolor sit amet, consectetur adipiscing elit suspendisse.</p>
+            {/* <p className='text-gray-600 w-56 text-center text-lg'>Lorem ipsum dolor sit amet, consectetur adipiscing elit suspendisse.</p> */}
           </div>
           <div className="w-[70%]">
             <img src={login} alt="no-img" loading='lazy' />
