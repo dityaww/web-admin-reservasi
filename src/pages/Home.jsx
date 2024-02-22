@@ -12,9 +12,9 @@ function Home() {
         
         <div className="mt-10">
             <h1 className='font-bold text-2xl text-neutral-600'>Welcome to Dashboard Admin Gunung Ungaran</h1>
-            <div className="grid grid-cols-1 bg-red-200 my-10 rounded-md overflow-hidden">
+            {/* <div className="grid grid-cols-1 bg-red-200 my-10 rounded-md overflow-hidden">
               <img src={ungaran} alt="no-img" className='w-full' />
-            </div>
+            </div> */}
             <div className="grid grid-cols-4 gap-5">
                 {/* <div className="bg-blue-200 rounded-md h-56">1</div>
                 <div className="bg-blue-200 rounded-md h-56">1</div>

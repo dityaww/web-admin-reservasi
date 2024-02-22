@@ -130,13 +130,13 @@ function Pendakian() {
                             All data
                         </button>
                     </div>
-                    <div className="">
+                    {/* <div className="">
                         <button onClick={() => {
                             getDataPendakianToday(status, token)
                         }} className='border-2 px-5 py-1.5 rounded-full bg-neutral-200 text-neutral-700 hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white'>
                             only today
                         </button>
-                    </div>
+                    </div> */}
                     <div className="">
                         <button onClick={() => {
                             getDataPendakianStartFromToday(status, token)
@@ -204,7 +204,7 @@ function Pendakian() {
                                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                       {id+1}
                                   </th>
-                                  <td className="px-6 py-4">
+                                  <td className="px-6 py-4 capitalize">
                                       {items.ketua}
                                   </td>
                                   <td className="px-6 py-4">

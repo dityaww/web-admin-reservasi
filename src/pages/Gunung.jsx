@@ -29,7 +29,7 @@ function Gunung() {
     setTimeout(() => {
         fetch().then((res) => {
             setData(res);
-            setFoto(res.photo)
+            setFoto(res.photo[0])
         }).catch((err) => {
             console.log(err);
         })
@@ -48,7 +48,11 @@ function Gunung() {
         <div className="mt-10">
             <h1 className='font-regular text-2xl text-neutral-600 antialiased'>Informasi Gunung</h1>
             <div className="grid grid-cols-2 gap-5 mt-5">
-                {foto.length !== 0 && 
+                <div className="w-full h-72 overflow-hidden rounded-lg">
+                    <img src={foto} alt="no-img" />
+                </div>
+                
+                {/* {foto.length !== 0 && 
                     foto.map((items) => {
                         return(
                             <div className="w-full h-72 overflow-hidden rounded-lg">
@@ -56,7 +60,7 @@ function Gunung() {
                             </div>
                         )
                     })
-                }
+                } */}
             </div>
 
             {data === null ? (
